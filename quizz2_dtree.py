@@ -194,13 +194,13 @@ def train_tree(data, criterion):
 
 # 6
 bal_dataset = []
-with open('bal.txt.txt', 'r') as f:
+with open('bal.txt', 'r') as f:
     for line in f.readlines():
         out, *features = line.strip().split(",")
         bal_dataset.append((tuple(features), out))
 
 car_dataset = []
-with open('car.txt.txt', 'r') as f:
+with open('car.txt', 'r') as f:
     for line in f.readlines():
         *features, out = line.strip().split(",")
         car_dataset.append((tuple(features), out))
