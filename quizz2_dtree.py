@@ -148,6 +148,13 @@ def entropy(data):
 # print("{:.4f}".format(entropy(data)))
 
 
+data = [((3,-1),'-'),((2,1),'+')] #0.5
+data = [((0,0),'+'),((1,0),'-'),((-3,2),'+'),((1,1),'+')]  #0.25
+data = [((-5,-5),'-'),((-6,-4),'+'),((-4,-5),'-')]  #0.33
+data = [((1,-1),'-'),((2,0),'-')] #0.5
+print("{:.4f}".format(misclassification(data)))
+
+
 def get_impurity(criterion, k, data):
     separator, partition = partition_by_feature_value(k, data)
     if len(partition) == 1:
@@ -157,12 +164,12 @@ def get_impurity(criterion, k, data):
 
 def train_tree(data, criterion):
     classes = list(set([d[-1] for d in data]))
-    if len(classes) == 1:
-        return DTNode(data[0][1])
-    elif len(data[0]) == 0:
+    if len(classes) == 1: # if all examples are in one class
+        return DTNode(data[0][1])   # return a leaf node with that class label
+    elif len(data[0]) == 0:  # if the set of features is empty
         proportions = [get_proportion(k, data) for k in classes]
         most_common_label = classes[proportions.index(max(proportions))]
-        return DTNode(most_common_label)
+        return DTNode(most_common_label)  # return a leaf node with the most common class label
     else:
         features = data[0][0]
         impurities = [get_impurity(criterion, k, data) for k in range(len(features))]
@@ -194,13 +201,13 @@ def train_tree(data, criterion):
 
 # 6
 bal_dataset = []
-with open('bal.txt', 'r') as f:
+with open('bal.txt.txt', 'r') as f:
     for line in f.readlines():
         out, *features = line.strip().split(",")
         bal_dataset.append((tuple(features), out))
 
 car_dataset = []
-with open('car.txt', 'r') as f:
+with open('car.txt.txt', 'r') as f:
     for line in f.readlines():
         *features, out = line.strip().split(",")
         car_dataset.append((tuple(features), out))
